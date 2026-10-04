@@ -16,7 +16,7 @@ export default function DetailPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const detail = useSelector((state) => state.lostFounds.detail);
+  const detail = useSelector((state) => state.lostFounds?.detail);
   const profile = useSelector((state) => state.users?.profile);
 
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -33,8 +33,12 @@ export default function DetailPage() {
 
   if (!detail) {
     return (
-      <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
+      <div className="bg-white rounded-xl border border-slate-200 p-12 text-center max-w-4xl mx-auto shadow-sm">
         <h1 className="text-xl font-bold text-slate-900">Memuat detail laporan...</h1>
+        <p className="text-slate-700 font-medium mt-1">Silakan tunggu sebentar atau kembali ke beranda.</p>
+        <Link to="/" className="inline-block mt-4 text-blue-700 font-bold hover:underline text-sm">
+          &larr; Kembali ke Beranda
+        </Link>
       </div>
     );
   }
