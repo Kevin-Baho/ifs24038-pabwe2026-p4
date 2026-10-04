@@ -34,12 +34,12 @@ export default function DetailPage() {
   if (!detail) {
     return (
       <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
-        <p className="text-slate-500 font-medium">Memuat detail laporan...</p>
+        <h1 className="text-xl font-bold text-slate-900">Memuat Detail Laporan</h1>
+        <p className="text-slate-700 font-medium mt-1">Silakan tunggu sebentar...</p>
       </div>
     );
   }
 
-  // Pengecekan pemilik yang fleksibel untuk berbagai format Delcom API
   const authorData = detail.user || detail.author || {};
   const isOwner = Boolean(
     detail.is_me ||
@@ -80,7 +80,7 @@ export default function DetailPage() {
       <div className="flex items-center justify-between">
         <Link
           to="/"
-          className="inline-flex items-center text-sm font-semibold text-slate-600 hover:text-slate-900 gap-1"
+          className="inline-flex items-center text-sm font-bold text-slate-800 hover:text-black gap-1"
         >
           &larr; Kembali ke Beranda
         </Link>
@@ -90,10 +90,10 @@ export default function DetailPage() {
             <button
               type="button"
               onClick={handleToggleCompleted}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold shadow-sm transition-colors cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold shadow-sm transition-colors cursor-pointer ${
                 detail.is_completed
-                  ? "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                  : "bg-emerald-600 text-white hover:bg-emerald-700"
+                  ? "bg-slate-200 text-slate-900 hover:bg-slate-300"
+                  : "bg-emerald-800 text-white hover:bg-emerald-900"
               }`}
             >
               {detail.is_completed ? "Tandai Belum Selesai" : "Tandai Selesai"}
@@ -101,14 +101,14 @@ export default function DetailPage() {
             <button
               type="button"
               onClick={() => setIsEditOpen(true)}
-              className="bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer"
+              className="bg-slate-200 text-slate-900 hover:bg-slate-300 px-3.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer"
             >
               Edit
             </button>
             <button
               type="button"
               onClick={handleDelete}
-              className="bg-red-50 text-red-600 hover:bg-red-100 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer"
+              className="bg-red-50 text-red-800 hover:bg-red-100 px-3.5 py-1.5 rounded-lg text-xs font-bold cursor-pointer border border-red-300"
             >
               Hapus
             </button>
@@ -117,8 +117,7 @@ export default function DetailPage() {
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-        {/* Cover Section */}
-        <div className="relative w-full bg-slate-100 h-64 md:h-80 flex items-center justify-center overflow-hidden">
+        <div className="relative w-full bg-slate-200 h-64 md:h-80 flex items-center justify-center overflow-hidden">
           {detail.cover ? (
             <img
               src={detail.cover}
@@ -126,38 +125,37 @@ export default function DetailPage() {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="text-slate-400 font-medium">Belum ada foto sampul</div>
+            <div className="text-slate-800 font-bold">Belum ada foto sampul</div>
           )}
 
           {isOwner && (
             <button
               type="button"
               onClick={() => setIsCoverOpen(true)}
-              className="absolute bottom-4 right-4 bg-white/90 backdrop-blur hover:bg-white text-slate-800 text-xs font-semibold px-3 py-2 rounded-lg shadow cursor-pointer"
+              className="absolute bottom-4 right-4 bg-white text-slate-900 text-xs font-bold px-3 py-2 rounded-lg shadow cursor-pointer border border-slate-300"
             >
               📷 Ganti Cover
             </button>
           )}
         </div>
 
-        {/* Content Section */}
         <div className="p-6 md:p-8 space-y-6">
           <div className="flex flex-wrap items-center gap-2">
             <span
               className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
                 detail.status === "lost"
-                  ? "bg-red-100 text-red-700"
-                  : "bg-emerald-100 text-emerald-700"
+                  ? "bg-red-800 text-white"
+                  : "bg-emerald-800 text-white"
               }`}
             >
               {detail.status === "lost" ? "Kehilangan" : "Ditemukan"}
             </span>
 
             <span
-              className={`px-3 py-1 rounded-full text-xs font-semibold ${
+              className={`px-3 py-1 rounded-full text-xs font-bold ${
                 detail.is_completed
-                  ? "bg-blue-100 text-blue-700"
-                  : "bg-amber-100 text-amber-700"
+                  ? "bg-blue-800 text-white"
+                  : "bg-amber-800 text-white"
               }`}
             >
               {detail.is_completed ? "Selesai / Terverifikasi" : "Dalam Proses Pencarian"}
@@ -166,30 +164,29 @@ export default function DetailPage() {
 
           <div className="space-y-2">
             <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900">
-              {detail.title}
+              {detail.title || "Detail Laporan"}
             </h1>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-700 font-medium">
               Dibuat: {formatDate(detail.created_at)}
               {detail.updated_at && ` • Diperbarui: ${formatDate(detail.updated_at)}`}
             </p>
           </div>
 
-          <div className="prose prose-slate max-w-none">
-            <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-2">
+          <div className="space-y-2">
+            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wide">
               Deskripsi
-            </h3>
-            <p className="text-slate-600 leading-relaxed whitespace-pre-line text-sm md:text-base">
-              {detail.description}
+            </h2>
+            <p className="text-slate-800 leading-relaxed whitespace-pre-line text-sm md:text-base">
+              {detail.description || "Tidak ada deskripsi."}
             </p>
           </div>
 
-          {/* Author / Pelapor Info */}
-          <div className="border-t border-slate-100 pt-6">
-            <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-3">
+          <div className="border-t border-slate-200 pt-6">
+            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wide mb-3">
               Informasi Pelapor
-            </h3>
+            </h2>
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 text-sm overflow-hidden">
+              <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-800 text-sm overflow-hidden border border-blue-200">
                 {authorData.photo ? (
                   <img
                     src={authorData.photo}
@@ -203,10 +200,10 @@ export default function DetailPage() {
                 )}
               </div>
               <div>
-                <p className="text-sm font-semibold text-slate-800">
+                <p className="text-sm font-bold text-slate-900">
                   {authorData.name || "Anonim"}
                 </p>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-700 font-medium">
                   {authorData.email || "-"}
                 </p>
               </div>

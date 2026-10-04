@@ -64,7 +64,7 @@ export default function HomePage() {
         <button
           type="button"
           onClick={() => setIsAddModalOpen(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors cursor-pointer"
+          className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors cursor-pointer"
         >
           + Tambah Laporan
         </button>
@@ -77,16 +77,16 @@ export default function HomePage() {
           <p className="text-2xl font-black text-slate-900 mt-1">{totalCount}</p>
         </div>
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-          <p className="text-xs font-bold text-red-700 uppercase">Kehilangan</p>
-          <p className="text-2xl font-black text-red-700 mt-1">{lostCount}</p>
+          <p className="text-xs font-bold text-red-800 uppercase">Kehilangan</p>
+          <p className="text-2xl font-black text-red-800 mt-1">{lostCount}</p>
         </div>
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-          <p className="text-xs font-bold text-emerald-700 uppercase">Ditemukan</p>
-          <p className="text-2xl font-black text-emerald-700 mt-1">{foundCount}</p>
+          <p className="text-xs font-bold text-emerald-800 uppercase">Ditemukan</p>
+          <p className="text-2xl font-black text-emerald-800 mt-1">{foundCount}</p>
         </div>
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-          <p className="text-xs font-bold text-blue-700 uppercase">Selesai / Kembali</p>
-          <p className="text-2xl font-black text-blue-700 mt-1">{completedCount}</p>
+          <p className="text-xs font-bold text-blue-800 uppercase">Selesai / Kembali</p>
+          <p className="text-2xl font-black text-blue-800 mt-1">{completedCount}</p>
         </div>
       </div>
 
@@ -151,7 +151,7 @@ export default function HomePage() {
       {/* Items List */}
       {filteredItems.length === 0 ? (
         <div className="bg-white rounded-xl border border-slate-200 p-12 text-center shadow-sm">
-          <p className="text-slate-700 font-medium">Tidak ada laporan yang ditemukan.</p>
+          <p className="text-slate-800 font-bold">Tidak ada laporan yang ditemukan.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -161,7 +161,7 @@ export default function HomePage() {
               className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
             >
               <div>
-                <div className="h-44 w-full bg-slate-100 relative overflow-hidden flex items-center justify-center">
+                <div className="h-44 w-full bg-slate-200 relative overflow-hidden flex items-center justify-center">
                   {item.cover ? (
                     <img
                       src={item.cover}
@@ -169,19 +169,19 @@ export default function HomePage() {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="text-slate-600 font-medium text-sm">Tidak ada foto</div>
+                    <div className="text-slate-800 font-bold text-sm">Tidak ada foto</div>
                   )}
                   <span
-                    className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-bold ${
+                    className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
                       item.status === "lost"
-                        ? "bg-red-600 text-white"
-                        : "bg-emerald-600 text-white"
+                        ? "bg-red-800 text-white"
+                        : "bg-emerald-800 text-white"
                     }`}
                   >
                     {item.status === "lost" ? "Kehilangan" : "Ditemukan"}
                   </span>
                   {Boolean(item.is_completed) && (
-                    <span className="absolute top-3 right-3 bg-blue-700 text-white px-2 py-0.5 rounded-md text-xs font-semibold">
+                    <span className="absolute top-3 right-3 bg-blue-800 text-white px-2 py-0.5 rounded-md text-xs font-bold">
                       Selesai
                     </span>
                   )}
@@ -191,17 +191,17 @@ export default function HomePage() {
                   <h2 className="font-bold text-slate-900 text-base line-clamp-1">
                     {item.title}
                   </h2>
-                  <p className="text-slate-700 text-xs line-clamp-2 leading-relaxed">
+                  <p className="text-slate-800 text-xs line-clamp-2 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
               </div>
 
-              <div className="p-4 pt-0 border-t border-slate-100 flex items-center justify-between text-xs text-slate-700 mt-2 font-medium">
+              <div className="p-4 pt-0 border-t border-slate-200 flex items-center justify-between text-xs text-slate-800 mt-2 font-bold">
                 <span>{formatDate(item.created_at)}</span>
                 <Link
                   to={`/lost-founds/${item.id}`}
-                  className="text-blue-700 font-bold hover:underline"
+                  className="text-blue-800 font-bold hover:underline"
                 >
                   Detail &rarr;
                 </Link>
