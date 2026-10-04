@@ -27,9 +27,6 @@ export default function LostFoundLayout() {
       <div className="flex flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 gap-6">
         <SidebarComponent />
         <main className="flex-1 min-w-0">
-          <h1 style={{ position: "absolute", left: "-9999px", top: "-9999px" }}>
-            Aplikasi Lost and Founds Delcom
-          </h1>
           <Outlet />
         </main>
       </div>

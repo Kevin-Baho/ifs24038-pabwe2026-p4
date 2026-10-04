@@ -8,18 +8,18 @@ export default function SidebarComponent() {
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-slate-200 hidden md:block shrink-0 min-h-[calc(100vh-4rem)] p-4">
-      <nav className="space-y-1">
+    <aside className="w-64 shrink-0 hidden md:block" aria-label="Bilah Samping Navigasi">
+      <nav aria-label="Menu Utama" className="bg-white rounded-2xl border border-slate-200 p-4 space-y-1 shadow-sm">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.to === "/"}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
+              `flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-colors ${
                 isActive
-                  ? "bg-blue-50 text-blue-600 font-bold"
-                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-medium"
+                  ? "bg-blue-50 text-blue-600 font-semibold"
+                  : "text-slate-600 hover:bg-slate-50 hover:text-blue-600 font-medium"
               }`
             }
           >
@@ -31,4 +31,3 @@ export default function SidebarComponent() {
     </aside>
   );
 }
-
