@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import useInput from "../../../hooks/useInput";
-import { asyncSetAuthLogin, asyncLogin } from "../states/action";
+import { asyncLogin } from "../states/action";
 
 export default function LoginPage() {
   const [email, onEmailChange] = useInput("");
@@ -12,8 +12,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const loginAction = asyncSetAuthLogin || asyncLogin;
-    const success = await dispatch(loginAction({ email, password }));
+    const success = await dispatch(asyncLogin({ email, password }));
     if (success) {
       navigate("/");
     }
