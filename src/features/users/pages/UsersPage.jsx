@@ -18,8 +18,8 @@ export default function UsersPage() {
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">Daftar Pengguna</h1>
-        <p className="text-slate-500 text-sm">Lihat seluruh pengguna yang terdaftar di sistem</p>
+        <h1 className="text-2xl font-bold text-slate-900">Daftar Pengguna</h1>
+        <p className="text-slate-700 text-sm">Lihat seluruh pengguna yang terdaftar di sistem</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -28,7 +28,7 @@ export default function UsersPage() {
             key={user.id}
             className="bg-white p-4 rounded-xl border border-slate-200 flex items-center space-x-3 shadow-sm hover:border-blue-200 transition-colors"
           >
-            <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 overflow-hidden shrink-0">
+            <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-700 overflow-hidden shrink-0 border border-blue-200">
               {user.photo ? (
                 <img src={user.photo} alt={user.name || "User"} className="h-full w-full object-cover" />
               ) : (
@@ -36,8 +36,8 @@ export default function UsersPage() {
               )}
             </div>
             <div className="min-w-0 flex-1">
-              <h4 className="font-semibold text-sm text-slate-800 truncate">{user.name || "Pengguna"}</h4>
-              <p className="text-xs text-slate-500 truncate">{user.email || "-"}</p>
+              <h2 className="font-bold text-sm text-slate-900 truncate">{user.name || "Pengguna"}</h2>
+              <p className="text-xs text-slate-700 truncate">{user.email || "-"}</p>
             </div>
           </div>
         ))}

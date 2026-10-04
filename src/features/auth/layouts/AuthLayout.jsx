@@ -7,11 +7,11 @@ export default function AuthLayout() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-slate-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8" role="main">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <h2 className="text-3xl font-extrabold text-blue-700 tracking-tight">
+        <p className="text-3xl font-black text-blue-700 tracking-tight">
           Delcom Lost & Founds
-        </h2>
+        </p>
         <p className="mt-2 text-sm text-slate-700 font-medium">
           Aplikasi Pelaporan & Pencarian Barang Hilang
         </p>
