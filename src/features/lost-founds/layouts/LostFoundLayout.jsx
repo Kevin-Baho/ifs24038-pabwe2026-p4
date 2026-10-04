@@ -9,7 +9,7 @@ import SidebarComponent from "../components/SidebarComponent";
 export default function LostFoundLayout() {
   const token = getAccessToken();
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.users.profile);
+  const profile = useSelector((state) => state.users?.profile);
 
   useEffect(() => {
     if (token && !profile) {
@@ -24,13 +24,12 @@ export default function LostFoundLayout() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       <NavbarComponent />
-      <div className="flex flex-1">
+      <div className="flex flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 gap-6">
         <SidebarComponent />
-        <main className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full">
+        <main className="flex-1 min-w-0" role="main">
           <Outlet />
         </main>
       </div>
     </div>
   );
 }
-

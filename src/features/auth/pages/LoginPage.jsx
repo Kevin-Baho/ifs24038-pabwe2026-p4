@@ -20,10 +20,10 @@ export default function LoginPage() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <h3 className="text-xl font-bold text-slate-800">Masuk Akun</h3>
+      <h1 className="text-2xl font-bold text-slate-900 text-center">Masuk Akun</h1>
       
       <div>
-        <label htmlFor="login-email-input" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="login-email-input" className="block text-xs font-bold text-slate-800 mb-1">
           Email
         </label>
         <input
@@ -33,13 +33,13 @@ export default function LoginPage() {
           required
           value={email}
           onChange={onEmailChange}
-          className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+          className="mt-1 block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg text-slate-900 text-sm focus:outline-blue-600 shadow-sm"
           placeholder="nama@email.com"
         />
       </div>
 
       <div>
-        <label htmlFor="login-password-input" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="login-password-input" className="block text-xs font-bold text-slate-800 mb-1">
           Kata Sandi
         </label>
         <input
@@ -49,7 +49,7 @@ export default function LoginPage() {
           required
           value={password}
           onChange={onPasswordChange}
-          className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+          className="mt-1 block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg text-slate-900 text-sm focus:outline-blue-600 shadow-sm"
           placeholder="••••••••"
         />
       </div>
@@ -57,14 +57,14 @@ export default function LoginPage() {
       <button
         id="login-submit-button"
         type="submit"
-        className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
+        className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow cursor-pointer transition-colors"
       >
         Masuk
       </button>
 
-      <div className="text-center text-sm text-slate-600">
+      <div className="text-center text-xs text-slate-700 font-medium">
         Belum punya akun?{" "}
-        <Link to="/auth/register" className="font-medium text-blue-600 hover:text-blue-500">
+        <Link to="/auth/register" className="font-bold text-blue-700 hover:underline">
           Daftar sekarang
         </Link>
       </div>

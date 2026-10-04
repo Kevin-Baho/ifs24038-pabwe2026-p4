@@ -11,9 +11,9 @@ import AddModal from "../modals/AddModal";
 
 export default function HomePage() {
   const dispatch = useDispatch();
-  const lostFounds = useSelector((state) => state.lostFounds.lostFounds);
-  const dailyStats = useSelector((state) => state.lostFounds.dailyStats);
-  const monthlyStats = useSelector((state) => state.lostFounds.monthlyStats);
+  const lostFounds = useSelector((state) => state.lostFounds?.lostFounds) || [];
+  const dailyStats = useSelector((state) => state.lostFounds?.dailyStats);
+  const monthlyStats = useSelector((state) => state.lostFounds?.monthlyStats);
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -56,15 +56,15 @@ export default function HomePage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Laporan Lost & Found</h1>
-          <p className="text-sm text-slate-500">
+          <h1 className="text-2xl font-bold text-slate-900">Laporan Lost & Found</h1>
+          <p className="text-sm text-slate-700">
             Temukan barang yang hilang atau laporkan barang yang Anda temukan
           </p>
         </div>
         <button
           type="button"
           onClick={() => setIsAddModalOpen(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition-colors cursor-pointer"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors cursor-pointer"
         >
           + Tambah Laporan
         </button>
@@ -72,48 +72,50 @@ export default function HomePage() {
 
       {/* Summary Statistics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <p className="text-xs font-medium text-slate-500 uppercase">Total Laporan</p>
-          <p className="text-2xl font-bold text-slate-800 mt-1">{totalCount}</p>
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <p className="text-xs font-bold text-slate-700 uppercase">Total Laporan</p>
+          <p className="text-2xl font-black text-slate-900 mt-1">{totalCount}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <p className="text-xs font-medium text-red-500 uppercase">Kehilangan</p>
-          <p className="text-2xl font-bold text-red-600 mt-1">{lostCount}</p>
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <p className="text-xs font-bold text-red-700 uppercase">Kehilangan</p>
+          <p className="text-2xl font-black text-red-700 mt-1">{lostCount}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <p className="text-xs font-medium text-emerald-500 uppercase">Ditemukan</p>
-          <p className="text-2xl font-bold text-emerald-600 mt-1">{foundCount}</p>
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <p className="text-xs font-bold text-emerald-700 uppercase">Ditemukan</p>
+          <p className="text-2xl font-black text-emerald-700 mt-1">{foundCount}</p>
         </div>
-        <div className="bg-white p-4 rounded-xl border border-slate-200">
-          <p className="text-xs font-medium text-blue-500 uppercase">Selesai / Kembali</p>
-          <p className="text-2xl font-bold text-blue-600 mt-1">{completedCount}</p>
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <p className="text-xs font-bold text-blue-700 uppercase">Selesai / Kembali</p>
+          <p className="text-2xl font-black text-blue-700 mt-1">{completedCount}</p>
         </div>
       </div>
 
-      {/* Daily & Monthly Stats info if loaded */}
+      {/* Daily & Monthly Stats */}
       {(dailyStats || monthlyStats) && (
-        <div className="bg-blue-50 border border-blue-200 p-4 rounded-xl text-xs text-blue-800 flex flex-wrap gap-4">
+        <div className="bg-blue-50 border border-blue-200 p-4 rounded-xl text-xs text-blue-900 flex flex-wrap gap-4 font-semibold">
           {dailyStats && <div>Statistik Harian: Aktif</div>}
           {monthlyStats && <div>Statistik Bulanan: Aktif</div>}
         </div>
       )}
 
-      {/* Search and Filters Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      {/* Search and Filters Bar with Accessible Labels */}
+      <div className="bg-white p-4 rounded-xl border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 shadow-sm">
         <div>
           <input
             type="text"
+            aria-label="Cari nama atau deskripsi barang"
             placeholder="Cari nama atau deskripsi..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
           />
         </div>
         <div>
           <select
+            aria-label="Filter Kategori Status"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-600"
           >
             <option value="all">Semua Status</option>
             <option value="lost">Kehilangan</option>
@@ -122,9 +124,10 @@ export default function HomePage() {
         </div>
         <div>
           <select
+            aria-label="Filter Progres Penyelesaian"
             value={completedFilter}
             onChange={(e) => setCompletedFilter(e.target.value)}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-600"
           >
             <option value="all">Semua Progres</option>
             <option value="true">Selesai</option>
@@ -133,9 +136,10 @@ export default function HomePage() {
         </div>
         <div>
           <select
+            aria-label="Filter Kepemilikan Laporan"
             value={isMeFilter}
             onChange={(e) => setIsMeFilter(e.target.value)}
-            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-600"
           >
             <option value="all">Semua Kepemilikan</option>
             <option value="true">Laporan Saya</option>
@@ -146,8 +150,8 @@ export default function HomePage() {
 
       {/* Items List */}
       {filteredItems.length === 0 ? (
-        <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
-          <p className="text-slate-500 font-medium">Tidak ada laporan yang ditemukan.</p>
+        <div className="bg-white rounded-xl border border-slate-200 p-12 text-center shadow-sm">
+          <p className="text-slate-700 font-medium">Tidak ada laporan yang ditemukan.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -165,39 +169,39 @@ export default function HomePage() {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="text-slate-400 font-medium text-sm">Tidak ada foto</div>
+                    <div className="text-slate-600 font-medium text-sm">Tidak ada foto</div>
                   )}
                   <span
                     className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-bold ${
                       item.status === "lost"
-                        ? "bg-red-500 text-white"
-                        : "bg-emerald-500 text-white"
+                        ? "bg-red-600 text-white"
+                        : "bg-emerald-600 text-white"
                     }`}
                   >
                     {item.status === "lost" ? "Kehilangan" : "Ditemukan"}
                   </span>
                   {Boolean(item.is_completed) && (
-                    <span className="absolute top-3 right-3 bg-blue-600 text-white px-2 py-0.5 rounded-md text-xs font-semibold">
+                    <span className="absolute top-3 right-3 bg-blue-700 text-white px-2 py-0.5 rounded-md text-xs font-semibold">
                       Selesai
                     </span>
                   )}
                 </div>
 
                 <div className="p-4 space-y-2">
-                  <h3 className="font-bold text-slate-800 text-base line-clamp-1">
+                  <h2 className="font-bold text-slate-900 text-base line-clamp-1">
                     {item.title}
-                  </h3>
-                  <p className="text-slate-500 text-xs line-clamp-2 leading-relaxed">
+                  </h2>
+                  <p className="text-slate-700 text-xs line-clamp-2 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
               </div>
 
-              <div className="p-4 pt-0 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 mt-2">
+              <div className="p-4 pt-0 border-t border-slate-100 flex items-center justify-between text-xs text-slate-700 mt-2 font-medium">
                 <span>{formatDate(item.created_at)}</span>
                 <Link
                   to={`/lost-founds/${item.id}`}
-                  className="text-blue-600 font-semibold hover:underline"
+                  className="text-blue-700 font-bold hover:underline"
                 >
                   Detail &rarr;
                 </Link>
