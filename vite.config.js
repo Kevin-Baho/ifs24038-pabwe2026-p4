@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import process from "process";
 
-// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
@@ -14,6 +13,28 @@ export default defineConfig(({ mode }) => {
     },
     preview: {
       port: Number(env.APP_PORT) || 3000,
+    },
+    build: {
+      cssCodeSplit: true,
+      minify: "esbuild",
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              if (id.includes("sweetalert2")) {
+                return "swal";
+              }
+              if (id.includes("@reduxjs") || id.includes("react-redux")) {
+                return "redux";
+              }
+              if (id.includes("react-router-dom")) {
+                return "router";
+              }
+              return "vendor";
+            }
+          },
+        },
+      },
     },
     define: {
       DELCOM_BASEURL: JSON.stringify(
