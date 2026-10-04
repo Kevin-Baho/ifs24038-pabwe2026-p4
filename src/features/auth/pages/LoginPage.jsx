@@ -1,19 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useInput from "../../../hooks/useInput";
 import { asyncLogin } from "../states/action";
+import { getAccessToken } from "../../../helpers/apiHelper";
 
 export default function LoginPage() {
   const [email, onEmailChange] = useInput("");
   const [password, onPasswordChange] = useInput("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isAuthLogin = useSelector((state) => state.auth?.isAuthLogin || state.isAuthLogin);
+
+  useEffect(() => {
+    if (getAccessToken() || isAuthLogin) {
+      navigate("/");
+    }
+  }, [isAuthLogin, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const success = await dispatch(asyncLogin({ email, password }));
-    if (success) {
+    if (success || getAccessToken()) {
       navigate("/");
     }
   };
