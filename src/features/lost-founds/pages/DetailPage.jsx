@@ -34,8 +34,7 @@ export default function DetailPage() {
   if (!detail) {
     return (
       <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
-        <h1 className="text-xl font-bold text-slate-900">Memuat Detail Laporan</h1>
-        <p className="text-slate-700 font-medium mt-1">Silakan tunggu sebentar...</p>
+        <h1 className="text-xl font-bold text-slate-900">Memuat detail laporan...</h1>
       </div>
     );
   }
