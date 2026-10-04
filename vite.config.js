@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import process from "process";
 
+// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
@@ -13,17 +14,6 @@ export default defineConfig(({ mode }) => {
     },
     preview: {
       port: Number(env.APP_PORT) || 3000,
-    },
-    build: {
-      cssCodeSplit: true,
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            vendor: ["react", "react-dom", "react-router-dom"],
-            redux: ["@reduxjs/toolkit", "react-redux"],
-          },
-        },
-      },
     },
     define: {
       DELCOM_BASEURL: JSON.stringify(
