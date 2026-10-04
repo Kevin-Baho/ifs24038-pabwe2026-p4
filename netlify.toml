@@ -1,3 +1,6 @@
+[build.environment]
+  DISABLE_NETLIFY_HUD = "true"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
