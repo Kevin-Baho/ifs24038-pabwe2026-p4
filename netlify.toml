@@ -1,5 +1,6 @@
 [build.environment]
   DISABLE_NETLIFY_HUD = "true"
+  NETLIFY_BUILD_HUD = "false"
 
 [[redirects]]
   from = "/*"
@@ -14,7 +15,13 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
+# Memberikan cache 1 tahun penuh untuk semua aset statis (menghapus error cache lifetimes)
 [[headers]]
   for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/logo.svg"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"

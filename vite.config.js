@@ -14,6 +14,28 @@ export default defineConfig(({ mode }) => {
     preview: {
       port: Number(env.APP_PORT) || 3000,
     },
+    build: {
+      cssCodeSplit: true,
+      sourcemap: false,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              if (id.includes("react") || id.includes("react-dom") || id.includes("react-router-dom")) {
+                return "vendor-react";
+              }
+              if (id.includes("@reduxjs") || id.includes("react-redux")) {
+                return "vendor-redux";
+              }
+              if (id.includes("sweetalert2")) {
+                return "vendor-swal";
+              }
+              return "vendor-others";
+            }
+          },
+        },
+      },
+    },
     define: {
       DELCOM_BASEURL: JSON.stringify(
         env.VITE_DELCOM_BASEURL || "https://open-api.delcom.org/api/v1"
