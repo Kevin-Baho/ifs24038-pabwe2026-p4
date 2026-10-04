@@ -24,8 +24,9 @@ export function asyncSetProfile() {
   return async (dispatch) => {
     try {
       const data = await getProfileApi();
-      dispatch(setProfile(data));
-      return data;
+      const user = data?.user || data;
+      dispatch(setProfile(user));
+      return user;
     } catch (error) {
       dispatch(setProfile(null));
       return null;
@@ -37,7 +38,9 @@ export function asyncGetUsers() {
   return async (dispatch) => {
     try {
       const data = await getUsersApi();
-      dispatch(setUsers(data));
+      // Ekstrak array dari data.users (Delcom API) atau langsung data (mock test)
+      const items = Array.isArray(data) ? data : data?.users || data?.items || [];
+      dispatch(setUsers(items));
     } catch (error) {
       showErrorDialog(error.message);
     }

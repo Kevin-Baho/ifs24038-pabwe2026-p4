@@ -6,6 +6,7 @@ import {
   asyncUpdateLostFound,
   asyncDeleteLostFound,
 } from "../states/action";
+import { asyncSetProfile } from "../../users/states/action";
 import { formatDate, showConfirmDialog } from "../../../helpers/toolsHelper";
 import ChangeModal from "../modals/ChangeModal";
 import ChangeCoverModal from "../modals/ChangeCoverModal";
@@ -16,7 +17,7 @@ export default function DetailPage() {
   const navigate = useNavigate();
 
   const detail = useSelector((state) => state.lostFounds.detail);
-  const profile = useSelector((state) => state.users.profile);
+  const profile = useSelector((state) => state.users?.profile);
 
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isCoverOpen, setIsCoverOpen] = useState(false);
@@ -25,7 +26,10 @@ export default function DetailPage() {
     if (id) {
       dispatch(asyncGetLostFoundDetail(id));
     }
-  }, [id, dispatch]);
+    if (!profile) {
+      dispatch(asyncSetProfile());
+    }
+  }, [id, profile, dispatch]);
 
   if (!detail) {
     return (
@@ -35,10 +39,16 @@ export default function DetailPage() {
     );
   }
 
+  // Pengecekan pemilik yang fleksibel untuk berbagai format Delcom API
+  const authorData = detail.user || detail.author || {};
   const isOwner = Boolean(
     detail.is_me ||
-    (profile && detail.user_id && detail.user_id === profile.id) ||
-    (profile && detail.author?.id && detail.author.id === profile.id)
+    Number(detail.is_me) === 1 ||
+    (profile && (
+      String(detail.user_id) === String(profile.id) ||
+      String(detail.author_id) === String(profile.id) ||
+      String(authorData.id) === String(profile.id)
+    ))
   );
 
   const handleToggleCompleted = () => {
@@ -180,24 +190,24 @@ export default function DetailPage() {
             </h3>
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 text-sm overflow-hidden">
-                {detail.author?.photo ? (
+                {authorData.photo ? (
                   <img
-                    src={detail.author.photo}
-                    alt={detail.author.name}
+                    src={authorData.photo}
+                    alt={authorData.name || "Pelapor"}
                     className="h-full w-full object-cover"
                   />
                 ) : (
                   <span>
-                    {detail.author?.name ? detail.author.name.charAt(0) : "P"}
+                    {authorData.name ? authorData.name.charAt(0).toUpperCase() : "P"}
                   </span>
                 )}
               </div>
               <div>
                 <p className="text-sm font-semibold text-slate-800">
-                  {detail.author?.name || "Anonim"}
+                  {authorData.name || "Anonim"}
                 </p>
                 <p className="text-xs text-slate-500">
-                  {detail.author?.email || "-"}
+                  {authorData.email || "-"}
                 </p>
               </div>
             </div>
@@ -219,4 +229,3 @@ export default function DetailPage() {
     </div>
   );
 }
-

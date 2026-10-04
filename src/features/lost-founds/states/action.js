@@ -37,7 +37,10 @@ export function asyncGetLostFounds(filters = {}) {
   return async (dispatch) => {
     try {
       const data = await getLostFoundsApi(filters);
-      dispatch(setLostFounds(data));
+      const items = Array.isArray(data)
+        ? data
+        : data?.lost_founds || data?.items || [];
+      dispatch(setLostFounds(items));
     } catch (error) {
       showErrorDialog(error.message);
     }
@@ -48,7 +51,8 @@ export function asyncGetLostFoundDetail(id) {
   return async (dispatch) => {
     try {
       const data = await getLostFoundDetailApi(id);
-      dispatch(setLostFoundDetail(data));
+      const item = data?.lost_found || data;
+      dispatch(setLostFoundDetail(item));
     } catch (error) {
       showErrorDialog(error.message);
     }
@@ -77,10 +81,19 @@ export function asyncGetMonthlyStats() {
   };
 }
 
-export function asyncCreateLostFound({ title, description, status }) {
+export function asyncCreateLostFound({ title, description, status, cover }) {
   return async (dispatch) => {
     try {
-      await createLostFoundApi({ title, description, status });
+      const result = await createLostFoundApi({ title, description, status });
+      const createdId = result?.id || result?.lost_found?.id || result?.data?.id;
+
+      // Jika ada file foto cover yang dipilih, otomatis unggah ke server
+      if (cover && createdId) {
+        const formData = new FormData();
+        formData.append("cover", cover);
+        await uploadCoverLostFoundApi(createdId, formData);
+      }
+
       showSuccessDialog("Laporan berhasil dibuat!");
       dispatch(asyncGetLostFounds());
       return true;
