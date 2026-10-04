@@ -27,6 +27,8 @@ export default function LostFoundLayout() {
       <div className="flex flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 gap-6">
         <SidebarComponent />
         <main className="flex-1 min-w-0" role="main">
+          {/* Header utama untuk screen reader dan validator Axe Core */}
+          <h1 className="sr-only">Aplikasi Lost and Founds Delcom</h1>
           <Outlet />
         </main>
       </div>
